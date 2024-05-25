@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { Header } from "./components/Header";
 import { Body } from "./components/Body";
@@ -18,6 +18,8 @@ function App() {
     data,
   });
 
+  const _preSearchData = useRef(null);
+
   const sort = (e) => {
     const column = e.target.cellIndex;
     const dataToBeSorted = state.data;
@@ -34,6 +36,7 @@ function App() {
     });
 
     setState({
+      ...state,
       data: dataToBeSorted,
       sortBy: column,
       descending: descending,
@@ -42,6 +45,7 @@ function App() {
 
   const edit = (e) => {
     setState({
+      ...state,
       edit: {
         row: parseInt(e.target.dataset.rowIdx, 10),
         cell: e.target.cellIndex,
@@ -55,31 +59,33 @@ function App() {
     const data = state.data;
     data[state.edit.row][state.edit.cell] = input.value;
     setState({
+      ...state,
       data: data,
       edit: null,
     });
   };
 
-  // _preSearchData = null;
   const toggleSearch = () => {
-    // if (state.search) {
-    //   setState({
-    //     data: _preSearchData,
-    //     search: false,
-    //   });
-    //   _preSearchData = null;
-    // } else {
-    //   _preSearchData = state.data;
-    //   setState({
-    //     search: true,
-    //   });
-    // }
+    if (state.search) {
+      setState({
+        ...state,
+        data: _preSearchData.current,
+        search: false,
+      });
+
+      _preSearchData.current = null;
+    } else {
+      _preSearchData.current = state.data;
+
+      setState({ ...state, search: true });
+    }
   };
 
   const addSearchField = () => {
     if (!state.search) {
       return null;
     }
+
     return (
       <tr>
         {state.headers.map((_ignore, idx) => (
@@ -97,20 +103,26 @@ function App() {
   };
 
   const search = (e) => {
-    // const idx = parseInt(e.target.dataset.idx, 10);
-    // const searchTerm = e.target.value.toLowerCase();
-    // if (searchTerm === "") {
-    //   setState({
-    //     data: _preSearchData,
-    //   });
-    //   return;
-    // }
-    // const searchData = _preSearchData.filter((row) =>
-    //   row[idx].toLowerCase().includes(searchTerm)
-    // );
-    // setState({
-    //   data: searchData,
-    // });
+    const idx = parseInt(e.target.dataset.idx, 10);
+    const searchTerm = e.target.value.toLowerCase();
+
+    if (searchTerm === "") {
+      setState({
+        ...state,
+        data: _preSearchData.current,
+      });
+
+      return;
+    }
+
+    const searchData = _preSearchData.current.filter((row) =>
+      row[idx].toLowerCase().includes(searchTerm)
+    );
+
+    setState({
+      ...state,
+      data: searchData,
+    });
   };
 
   const download = () => {
