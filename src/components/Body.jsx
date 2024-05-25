@@ -9,10 +9,12 @@ export const Body = ({
 }) => (
   <tbody onDoubleClick={onDoubleClick}>
     {addSearchField()}
+
     {data.map((row, rowIdx) => (
       <tr key={rowIdx}>
         {row.map((cell, idx) => {
           let content = cell;
+
           if (edit && rowIdx === edit.row && idx === edit.cell) {
             content = (
               <form onSubmit={onSubmit}>
@@ -20,6 +22,7 @@ export const Body = ({
               </form>
             );
           }
+
           return (
             <td key={idx} data-row-idx={rowIdx}>
               {content}
@@ -34,7 +37,7 @@ export const Body = ({
 Body.propTypes = {
   onDoubleClick: PropTypes.func,
   onSubmit: PropTypes.func,
-  edit: PropTypes.func,
+  edit: PropTypes.object,
   data: PropTypes.array,
   addSearchField: PropTypes.func,
 };

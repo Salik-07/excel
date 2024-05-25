@@ -55,9 +55,12 @@ function App() {
 
   const saveContent = (e) => {
     e.preventDefault();
+
     const input = e.target.firstChild;
     const data = state.data;
+
     data[state.edit.row][state.edit.cell] = input.value;
+
     setState({
       ...state,
       data: data,
@@ -125,7 +128,7 @@ function App() {
     });
   };
 
-  const download = () => {
+  const download = (format, e) => {
     const content =
       format === "json"
         ? JSON.stringify(state.data)
@@ -143,6 +146,7 @@ function App() {
 
     const URL = window.URL || window.webkitURL;
     const blob = new Blob([content], { type: "text" + format });
+
     e.target.href = URL.createObjectURL(blob);
     e.target.download = "data." + format;
   };
@@ -156,7 +160,7 @@ function App() {
       />
       <table>
         <Header
-          headers={headers}
+          headers={state.headers}
           sortBy={state.sortBy}
           descending={state.descending}
           onClick={sort}
@@ -164,8 +168,8 @@ function App() {
         <Body
           onDoubleClick={edit}
           onSubmit={saveContent}
-          data={data}
-          edit={edit}
+          data={state.data}
+          edit={state.edit}
           addSearchField={addSearchField}
         />
       </table>
