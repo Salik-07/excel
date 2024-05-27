@@ -1,12 +1,11 @@
 import { useRef, useState } from "react";
 
-import { Header } from "./components/Header";
-import { Body } from "./components/Body";
-import { Search } from "./components/Search";
+import Header from "./components/Header";
+import Body from "./components/Body";
+import Search from "./components/Search";
 
 import data from "./data/books";
-
-const headers = ["Book", "Author", "Language", "Published", "Sales"];
+import tableHeaders from "./data/tableHeaders";
 
 function App() {
   const [state, setState] = useState({
@@ -14,7 +13,6 @@ function App() {
     descending: false,
     sortBy: null,
     edit: null,
-    headers,
     data,
   });
 
@@ -91,7 +89,7 @@ function App() {
 
     return (
       <tr>
-        {state.headers.map((_ignore, idx) => (
+        {tableHeaders.map((_ignore, idx) => (
           <td key={idx}>
             <input
               type="text"
@@ -160,7 +158,7 @@ function App() {
       />
       <table>
         <Header
-          headers={state.headers}
+          headers={tableHeaders}
           sortBy={state.sortBy}
           descending={state.descending}
           onClick={sort}

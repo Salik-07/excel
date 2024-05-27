@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-export const Search = ({ toggleBtn, downloadJSON, downloadCSV }) => (
+const Search = ({ toggleBtn, downloadJSON, downloadCSV }) => (
   <div>
     <button onClick={toggleBtn}>Search</button>
     <a href="data.json" onClick={downloadJSON}>
@@ -17,3 +17,5 @@ Search.propTypes = {
   downloadJSON: PropTypes.func,
   downloadCSV: PropTypes.func,
 };
+
+export default Search;

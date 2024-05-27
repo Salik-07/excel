@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
 
-export const Header = ({ onClick, headers, sortBy, descending }) => (
+const Header = ({ onClick, headers, sortBy, descending }) => (
   <thead onClick={onClick}>
     <tr>
       {headers.map((title, idx) => {
         if (sortBy === idx) {
           title += descending ? "\u2193" : "\u2191";
         }
+
         return <th key={idx}>{title}</th>;
       })}
     </tr>
@@ -19,3 +20,5 @@ Header.propTypes = {
   descending: PropTypes.bool,
   headers: PropTypes.array,
 };
+
+export default Header;

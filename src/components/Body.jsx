@@ -1,12 +1,6 @@
 import PropTypes from "prop-types";
 
-export const Body = ({
-  onDoubleClick,
-  onSubmit,
-  data,
-  addSearchField,
-  edit,
-}) => (
+const Body = ({ onDoubleClick, onSubmit, data, addSearchField, edit }) => (
   <tbody onDoubleClick={onDoubleClick}>
     {addSearchField()}
 
@@ -41,3 +35,5 @@ Body.propTypes = {
   data: PropTypes.array,
   addSearchField: PropTypes.func,
 };
+
+export default Body;

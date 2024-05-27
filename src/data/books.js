@@ -42,4 +42,15 @@ export default [
     "1887",
     "100 million",
   ],
+  ["The Catcher in the Rye", "J.D. Salinger", "English", "1951", "65 million"],
+  ["The Alchemist", "Paulo Coelho", "Portuguese", "1988", "65 million"],
+  ["The Da Vinci Code", "Dan Brown", "English", "2003", "80 million"],
+  [
+    "The Lion, the Witch and the Wardrobe",
+    "C.S. Lewis",
+    "English",
+    "1950",
+    "85 million",
+  ],
+  ["Don Quixote", "Miguel de Cervantes", "Spanish", "1605", "500 million"],
 ];
