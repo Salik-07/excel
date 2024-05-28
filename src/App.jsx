@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Body from "./components/Body";
 import Search from "./components/Search";
 
-import data from "./data/books";
+import books from "./data/books";
 import tableHeaders from "./data/tableHeaders";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
     descending: false,
     sortBy: null,
     edit: null,
-    data,
+    data: books,
   });
 
   const _preSearchData = useRef(null);
@@ -41,7 +41,7 @@ function App() {
     });
   };
 
-  const edit = (e) => {
+  const editCell = (e) => {
     setState({
       ...state,
       edit: {
@@ -83,9 +83,7 @@ function App() {
   };
 
   const addSearchField = () => {
-    if (!state.search) {
-      return null;
-    }
+    if (!state.search) return null;
 
     return (
       <tr>
@@ -149,6 +147,8 @@ function App() {
     e.target.download = "data." + format;
   };
 
+  const { data, sortBy, descending, edit } = state;
+
   return (
     <div>
       <Search
@@ -159,15 +159,15 @@ function App() {
       <table>
         <Header
           headers={tableHeaders}
-          sortBy={state.sortBy}
-          descending={state.descending}
+          sortBy={sortBy}
+          descending={descending}
           onClick={sort}
         />
         <Body
-          onDoubleClick={edit}
+          onDoubleClick={editCell}
           onSubmit={saveContent}
-          data={state.data}
-          edit={state.edit}
+          data={data}
+          edit={edit}
           addSearchField={addSearchField}
         />
       </table>
